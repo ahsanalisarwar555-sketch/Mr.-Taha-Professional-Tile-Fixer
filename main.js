@@ -8,6 +8,31 @@ document.addEventListener('DOMContentLoaded',()=>{
  document.querySelectorAll('.reveal').forEach((e,i)=>{e.style.transitionDelay=(i%5)*60+'ms';io?io.observe(e):e.classList.add('show')});
  document.querySelectorAll('.filter').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.filter').forEach(x=>x.classList.remove('active'));b.classList.add('active');const v=b.dataset.filter;document.querySelectorAll('.gallery-item').forEach(x=>x.style.display=(v==='all'||x.dataset.cat===v)?'block':'none')}));
  const modal=document.querySelector('.modal'),mi=modal?.querySelector('img'); document.querySelectorAll('.gallery-item').forEach(x=>x.addEventListener('click',()=>{if(modal&&mi){mi.src=x.querySelector('img').src;modal.classList.add('show')}})); modal?.addEventListener('click',e=>{if(e.target===modal||e.target.classList.contains('close'))modal.classList.remove('show')}); document.addEventListener('keydown',e=>{if(e.key==='Escape')modal?.classList.remove('show')});
- document.querySelectorAll('[data-wa-form]').forEach(f=>f.addEventListener('submit',e=>{e.preventDefault();const fd=new FormData(f);let msg='Salam Mr. Taha, I would like to request a site visit/quote.\\n';fd.forEach((v,k)=>msg+=k+': '+v+'\\n');location.href='https://wa.me/923106678072?text='+encodeURIComponent(msg)}));
+document.querySelectorAll('[data-wa-form]').forEach(f=>f.addEventListener('submit',e=>{
+    e.preventDefault();
+
+    const name=f.querySelector('[name="Name"]').value.trim();
+    const phone=f.querySelector('[name="Phone"]').value.trim();
+    const service=f.querySelector('[name="Service"]').value.trim();
+    const area=f.querySelector('[name="Area"]').value.trim();
+    const message=f.querySelector('[name="Message"]').value.trim();
+
+    const msg=`Assalam o Alaikum   Mr. Taha,
+
+
+
+Customer Name: ${name}
+Phone Number: ${phone}
+Service: ${service}
+Area: ${area || 'Not provided'}
+
+Project Details:
+${message}
+
+Thank you.
+`;
+
+    location.href='https://wa.me/923106678072?text='+encodeURIComponent(msg);
+}));
  const top=document.querySelector('.to-top');window.addEventListener('scroll',()=>top?.classList.toggle('show',scrollY>500));top?.addEventListener('click',()=>scrollTo({top:0,behavior:'smooth'}));
 });
