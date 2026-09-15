@@ -1,0 +1,13 @@
+document.addEventListener('DOMContentLoaded',()=>{
+ const header=document.querySelector('.site-header'),hamb=document.querySelector('.hamb');
+ hamb?.addEventListener('click',()=>{header.classList.toggle('open');hamb.setAttribute('aria-expanded',header.classList.contains('open'))});
+ document.querySelectorAll('.drop-toggle').forEach(btn=>btn.addEventListener('click',e=>{if(innerWidth<=900){e.preventDefault();btn.closest('.dropdown')?.classList.toggle('open')}}));
+ document.querySelectorAll('.menu a').forEach(a=>a.addEventListener('click',()=>{if(innerWidth<=900 && !a.classList.contains('drop-toggle'))header?.classList.remove('open')}));
+ const path=location.pathname.split('/').pop()||'index.html'; document.querySelectorAll('.menu>a:not(.drop-toggle)').forEach(a=>{if(a.getAttribute('href')===path)a.classList.add('active')});
+ const io='IntersectionObserver' in window?new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('show');io.unobserve(e.target)}}),{threshold:.12}):null;
+ document.querySelectorAll('.reveal').forEach((e,i)=>{e.style.transitionDelay=(i%5)*60+'ms';io?io.observe(e):e.classList.add('show')});
+ document.querySelectorAll('.filter').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.filter').forEach(x=>x.classList.remove('active'));b.classList.add('active');const v=b.dataset.filter;document.querySelectorAll('.gallery-item').forEach(x=>x.style.display=(v==='all'||x.dataset.cat===v)?'block':'none')}));
+ const modal=document.querySelector('.modal'),mi=modal?.querySelector('img'); document.querySelectorAll('.gallery-item').forEach(x=>x.addEventListener('click',()=>{if(modal&&mi){mi.src=x.querySelector('img').src;modal.classList.add('show')}})); modal?.addEventListener('click',e=>{if(e.target===modal||e.target.classList.contains('close'))modal.classList.remove('show')}); document.addEventListener('keydown',e=>{if(e.key==='Escape')modal?.classList.remove('show')});
+ document.querySelectorAll('[data-wa-form]').forEach(f=>f.addEventListener('submit',e=>{e.preventDefault();const fd=new FormData(f);let msg='Salam Mr. Taha, I would like to request a site visit/quote.\\n';fd.forEach((v,k)=>msg+=k+': '+v+'\\n');location.href='https://wa.me/923106678072?text='+encodeURIComponent(msg)}));
+ const top=document.querySelector('.to-top');window.addEventListener('scroll',()=>top?.classList.toggle('show',scrollY>500));top?.addEventListener('click',()=>scrollTo({top:0,behavior:'smooth'}));
+});
